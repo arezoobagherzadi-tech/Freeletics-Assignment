@@ -4,6 +4,7 @@ import base.BaseClass;
 import com.google.common.base.Verify;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 import pages.HomePage;
 import pages.JobsPage;
 import pages.PositionDetailPage;
@@ -11,12 +12,13 @@ import pages.PositionDetailPage;
 public class ApplyJobs extends BaseClass {
 
     HomePage homePage;
-
+    SoftAssert softAssert;
     public ApplyJobs(){
         homePage = new HomePage(driver);
+        softAssert = new SoftAssert();
     }
 
-    @Test
+    @Test(priority = 1)
     public void applyToQAPosition(){
         homePage.acceptCookies();
         JobsPage jobsPage = homePage.navigateToCareerPage()
@@ -27,14 +29,16 @@ public class ApplyJobs extends BaseClass {
         Assert.assertEquals(qaPage.getPositionTitle().getText(),"QA Engineer (all genders) - Remote or Munich");
         System.out.println(qaPage.getPositionTitle().getText());
         //Assertion for Description
-        Verify.verify(qaPage.getPositionDescription().isDisplayed(),"QA Description Not Found");
+        softAssert.assertTrue(qaPage.getPositionDescription().isDisplayed(),"QA Description Not Found");
         System.out.println(qaPage.getPositionDescription().getText());
         //Assertion for Responsibilities section
-        Verify.verify(qaPage.getPositionResponsibilities().size()==7, "QA Responsibilities Are Not 7");
+        softAssert.assertEquals(qaPage.getPositionResponsibilities().size(),7);
         System.out.println(qaPage.getPositionResponsibilities().size());
         //Assertion for Profile section
         Assert.assertEquals(qaPage.getPositionProfile().size(),6);
         System.out.println(qaPage.getPositionProfile().size());
         qaPage.clickOnApply();
+
+        softAssert.assertAll();
     }
 }

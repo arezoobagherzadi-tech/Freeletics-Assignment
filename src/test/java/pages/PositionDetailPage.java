@@ -18,7 +18,7 @@ public class PositionDetailPage {
     }
 
     @FindBy(xpath = "//a[@href='https://jobs.lever.co/freeletics/5e25d867-b427-4e54-9ee1-c8318d6be1a1/apply']")
-    WebElement applyButton;
+    public WebElement applyButton;
 
     @FindBy(css = "body:nth-child(2) div:nth-child(2) article:nth-child(1) section.rQOqDqdkjQL4 > div.UZGg709deEYo")
     WebElement applySection;
